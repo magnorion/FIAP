@@ -8,6 +8,7 @@ import javax.swing.UIManager;
 
 import br.com.fiap.dao.EventosDao;
 import br.com.fiap.entity.Evento;
+import br.com.fiap.repository.Repositorio;
 
 public class AppEventos {
 	public static void main(String[] args) {
@@ -29,7 +30,7 @@ public class AppEventos {
 				evento.setDescricao(descricao);
 				evento.setResponsavel(responsavel);
 				
-				EventosDao dao = new EventosDao();
+				EventosDao dao = Repositorio.getEventosDao();
 				dao.incluir(evento);
 				
 				JOptionPane.showMessageDialog(null, "Evento incluido com sucesso!", 

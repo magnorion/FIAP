@@ -6,7 +6,10 @@ import javax.swing.JOptionPane;
 import javax.swing.UIManager;
 
 import br.com.fiap.dao.EventosDao;
+import br.com.fiap.dao.ParticipantesDao;
 import br.com.fiap.entity.Evento;
+import br.com.fiap.entity.Participante;
+import br.com.fiap.repository.Repositorio;
 
 public class CadastroParticipante {
 	public static void main(String[] args) {
@@ -21,7 +24,7 @@ public class CadastroParticipante {
 				}
 				
 				// Buscando o evento
-				EventosDao dao = new EventosDao();
+				EventosDao dao = Repositorio.getEventosDao();
 				Set<Evento> listaEventos = dao.listar();
 				
 				Evento evento = (Evento) JOptionPane.showInputDialog(null, "Selecione um evento",
@@ -35,6 +38,18 @@ public class CadastroParticipante {
 				 * Preparar a inclusão do participante
 				 * Prever uma opção para listar todos os participaentes de um evento
 				 */
+				
+				Participante participante = new Participante();
+				participante.setEvento(evento);
+				participante.setNome(nome);
+				participante.setEmail(email);
+				
+				ParticipantesDao participanteDao = Repositorio.getParticipantesDao();
+				participanteDao.incluir(participante);
+				
+				JOptionPane.showMessageDialog(null, "Participante incluido com sucesso!", 
+						",mensagem", JOptionPane.INFORMATION_MESSAGE);
+
 			}
 			
 			
