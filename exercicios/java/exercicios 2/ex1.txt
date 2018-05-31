@@ -1,0 +1,75 @@
+// CalculadoraBasica.java
+package br.com.fiap.exercicios;
+
+public interface CalculadoraBasica {
+	public float somar(float op1, float op2);
+	public float subtrair(float op1, float op2);
+	public float dividir(float op1, float op2);
+	public float multiplicar(float op1, float op2);
+}
+
+// Calculadora.java
+package br.com.fiap.exercicios;
+
+public class Calculadora implements CalculadoraBasica{
+	private float result;
+	
+	@Override
+	public float somar(float op1, float op2) {
+		this.result = op1 + op2;
+		return this.result;
+	}
+
+	@Override
+	public float subtrair(float op1, float op2) {
+		this.result = op1 - op2;
+		return this.result;
+	}
+
+	@Override
+	public float dividir(float op1, float op2) {
+		this.result = op1 / op2;
+		return this.result;
+	}
+
+	@Override
+	public float multiplicar(float op1, float op2) {
+		this.result = op1 * op2;
+		return this.result;
+	}
+	
+}
+
+// Main.java
+package br.com.fiap.main;
+
+import javax.swing.JOptionPane;
+
+import br.com.fiap.exercicios.Calculadora;
+
+public class Main {
+	public static void main(String[] args) throws NumberFormatException, Exception {
+		String num1, num2;
+		Calculadora calc = new Calculadora();
+
+        // somar
+		num1 = JOptionPane.showInputDialog("Digite o valor do primeiro numero!");
+		num2 = JOptionPane.showInputDialog("Digite o valor do segundo numero!");
+		System.out.println(calc.somar(Float.parseFloat(num1), Float.parseFloat(num2)));
+		
+		// subtrair
+		num1 = JOptionPane.showInputDialog("Digite o valor do primeiro numero!");
+		num2 = JOptionPane.showInputDialog("Digite o valor do segundo numero!");
+		System.out.println(calc.subtrair(Float.parseFloat(num1), Float.parseFloat(num2)));
+		
+		// dividir
+		num1 = JOptionPane.showInputDialog("Digite o valor do primeiro numero!");
+		num2 = JOptionPane.showInputDialog("Digite o valor do segundo numero!");
+		System.out.println(calc.dividir(Float.parseFloat(num1), Float.parseFloat(num2)));
+		
+		// multiplicar
+		num1 = JOptionPane.showInputDialog("Digite o valor do primeiro numero!");
+		num2 = JOptionPane.showInputDialog("Digite o valor do segundo numero!");
+		System.out.println(calc.multiplicar(Float.parseFloat(num1), Float.parseFloat(num2)));
+	}
+}

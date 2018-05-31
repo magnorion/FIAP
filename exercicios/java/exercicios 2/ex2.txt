@@ -1,0 +1,14 @@
+//Implicito
+objeto = equipamento; // A
+objeto = movel; // B
+equipamento = smartphone2; // D
+smartphone = tablet; // E
+
+// Explicito
+equipamento = (Equipamento) tablet; //G
+movel = (Movel) tablet; //H
+tablet = (EquipamentoEletronico) equipamento; // I
+
+// Impossivel
+equipamento = tablet2; // C
+smartphone2 = tablet2; // F
