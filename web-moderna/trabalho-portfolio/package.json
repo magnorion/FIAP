@@ -1,0 +1,9 @@
+{
+  "name": "trabalho-portfolio",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "scripts": {
+    "bs": "browser-sync start --config bs-config.js"
+  }
+}

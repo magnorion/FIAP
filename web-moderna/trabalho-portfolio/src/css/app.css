@@ -1,0 +1,57 @@
+section {
+    margin-bottom: 50px;
+    padding: 30px;
+}
+
+section h2 {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+#principal-content {
+    text-align: center;
+}
+
+#principal-content h1 {
+    text-transform: uppercase;
+}
+
+#principal-content img{
+    width: 150px;
+    height: auto;
+    border-radius: 50%;
+    margin-bottom: 15px;
+}
+
+.box-projeto {
+    text-align: center !important;
+}
+
+.box-projeto p {
+    text-align: center;
+    text-transform: uppercase;
+    margin-top: 15px;
+    font-weight: bold;
+}
+
+.box-projeto img {
+    margin: 0px auto;
+    width: 150px;
+    height: auto;
+}
+
+.form-group label {
+    cursor: pointer;
+}
+
+.form-group textarea {
+    resize: none;
+    min-height: 100px;
+}
+
+footer {
+    background: #212529;
+    height: 100px;
+    color: #fff;
+    padding-top: 35px;
+}
