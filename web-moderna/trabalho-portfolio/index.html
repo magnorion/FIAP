@@ -9,26 +9,28 @@
         <link rel="stylesheet" href="src/css/app.css">
     </head>
     <body>
-        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-            <a class="navbar-brand" href="#">Portifolio</a>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav">
-                    <li class="nav-item active">
-                        <a class="nav-link" href="#">Sobre</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Trabalhos</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Contato</a>
-                    </li>
-                </ul>
+        <nav class="navbar navbar-expand-lg navbar-dark navbar-fixed-top">
+            <div class="container-fluid">
+                <a class="navbar-brand" href="#">WEB-DEV</a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav">
+                        <li class="nav-item">
+                            <a class="nav-link" data-ancora="sobre" href="#">Sobre</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" data-ancora="projetos" href="#">Trabalhos</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" data-ancora="contato" href="#">Contato</a>
+                        </li>
+                    </ul>
+                </div>
             </div>
         </nav>
-        <section class="col-md-12 jumbotron">
+        <section id="banner-holder" class="col-md-12 jumbotron">
             <div class="container">
                 <div id="principal-content">
                     <img class="img-circle" src="src/imgs/profile.jpg" alt="">
@@ -37,8 +39,8 @@
                 </div>
             </div>
         </section>
-        <section class="col-md-12">
-            <div id="sobre" class="container">
+        <section id="sobre" class="col-md-12">
+            <div class="container">
                 <h2> Sobre </h2>
                 <p> Formado em análise e desenvolvimento de sistemas e com o foco totalmente para aplicações web. </p>
                 <p> trabalhei em vários projetos como: aplicações para coleta/administração de dados, sites institucionais, landing pages e desenvolvimento para o WordPress (Plugins e Temas) </p>
@@ -51,18 +53,26 @@
                 <h2> Projetos </h2>
                 <p> Veja alguns dos meus projetos: </p>
                 <div class="row">
-                <div class="box-projeto col-md-4">
-                    <img class="img-circle" src="src/imgs/profile.jpg" alt="">
-                    <p>projeto 1</p>
-                </div>
-                <div class="box-projeto col-md-4">
-                    <img class="img-circle" src="src/imgs/profile.jpg" alt="">
-                    <p>projeto 2</p>
-                </div>
-                <div class="box-projeto col-md-4">
-                    <img class="img-circle" src="src/imgs/profile.jpg" alt="">
-                    <p>projeto 3</p>
-                </div>
+                    <div class="box-projeto col-md-3">
+                        <a href="http://enembrasil.com.br/" target="_BLANK">
+                        <img class="img-circle" src="src/imgs/enem-brasil.png" alt="">
+                        <p></a></p>
+                    </div>
+                    <div class="box-projeto col-md-3">
+                        <a href="http://redecruzeiro.cruzeirodosuleducacional.edu.br/" target="_BLANK">
+                        <img class="img-circle" src="src/imgs/rede-cruzeiro.png" alt="">
+                        <p></a></p>
+                    </div>
+                    <div class="box-projeto col-md-3">
+                        <a href="http://cruzeirodosulvirtual.com.br/" target="_BLANK">
+                        <img class="img-circle" src="src/imgs/cruzeiro-virtual.png" alt="">
+                        <p></a></p>
+                    </div>
+                    <div class="box-projeto col-md-3">
+                        <a href="http://contesuahistoria.unicid.edu.br/#/" target="_BLANK">
+                        <img class="img-circle" src="src/imgs/conte-sua-historia.png" alt="">
+                        <p></a></p>
+                    </div>
                 </div>
             </div>
         </section>
@@ -91,7 +101,7 @@
                 <p> Lucas - FullStack Dev </p>
             </div>
         </footer>
-        <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+        <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js" integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T" crossorigin="anonymous"></script>
         <script src="src/js/main.js"></script>
     </body>
