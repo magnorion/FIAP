@@ -1,6 +1,9 @@
 nav {
     background: #e87878 !important
 }
+h2 {
+    text-transform: uppercase;
+}
 
 #banner-holder {
     height: 50vh;
@@ -22,9 +25,10 @@ section h2 {
 
 #principal-content {
     text-align: center;
-    margin-top: 5vh;
     text-shadow: 1px 1px 3px #000;
-    color: #fff !important
+    color: #fff !important;
+    opacity: 0;
+    margin-top: -40px;  
 }
 
 #principal-content h1 {
@@ -42,10 +46,16 @@ section h2 {
     margin-top: -50px;
     padding-top: 50px;
     padding-bottom: 50px;
+    text-align: center;
 }
 
 #projetos {
     background: #ef9f9f;
+}
+
+#projetos h2, #projetos p {
+    color: #fff;
+    text-align: center;
 }
 
 .box-projeto {
@@ -71,13 +81,23 @@ section h2 {
     height: auto;
 }
 
+#contato {
+    background: #e87878;
+    color: #fff;
+    margin-bottom: 0px !important;
+}
+
 .form-group label {
     cursor: pointer;
-}
+}   
 
 .form-group textarea {
     resize: none;
     min-height: 100px;
+}
+
+form button {
+    width: 100%
 }
 
 footer {
@@ -92,4 +112,8 @@ nav {
     left: 0%;
     right: 0%;
     z-index: 999;
+}
+
+#conhecimento img {
+    width: 100%;
 }

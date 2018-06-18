@@ -14,6 +14,9 @@
             });
         });
 
+        $('#principal-content').animate({opacity: 1, marginTop: '5vh'},
+            1500);
+
         $('form button').on('click', function(e) {
             e.preventDefault();
             var nome = $("input[name='nome']").val();
