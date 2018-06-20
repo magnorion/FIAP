@@ -18,7 +18,14 @@ public class Escola implements Serializable {
 	private int id;
 	
 	private String nome;
+	private String endereco;
 	
+	public String getEndereco() {
+		return endereco;
+	}
+	public void setEndereco(String endereco) {
+		this.endereco = endereco;
+	}
 	public int getId() {
 		return id;
 	}

@@ -13,6 +13,8 @@ import javax.persistence.Id;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinColumns;
 
 @Entity
 @Table(name="alunos", catalog="dbescola")
@@ -28,7 +30,7 @@ public class Aluno implements Serializable {
 	@ManyToMany(fetch=FetchType.LAZY, cascade=CascadeType.ALL)
 	@JoinTable(name="alunos_cursos", catalog="dbescolas", joinColumns = 
 	{@JoinColumn(name="id_aluno", nullable=false, updatable=false)},
-	inverseJoinColumns = {@JoinColumns(name="id_curso", nullable=false, updatble=false)} )
+	inverseJoinColumns = {@JoinColumn(name="id_curso", nullable=false, updatable=false)} )
 	private Set<Curso> curso = new HashSet<>();
 	
 	public int getId() {
