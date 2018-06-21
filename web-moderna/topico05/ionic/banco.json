@@ -1,0 +1,35 @@
+{
+    "contatos": [
+    {
+    "Id": 1,
+    "Nome": "Emilio",
+    "Telefone": "3254-2200",
+    "DataNascimento": "1970-03-29T00:00:00"
+    },
+    {
+    "Id": 2,
+    "Nome": "Silvia",
+    "Telefone": "2705-9087",
+    "DataNascimento": "1968-11-29T00:00:00"
+    },
+    {
+    "Id": 2017,
+    "Nome": "Joao Tadeu",
+    "Telefone": "991521044",
+    "DataNascimento": "1981-10-24T00:00:00"
+    },
+    {
+    "Id": 4013,
+    "Nome": "Douglas",
+    "Telefone": "97205-5122",
+    "DataNascimento": "1980-12-23T00:00:00"
+    },
+    {
+    "Id": 4014,
+    "Nome": "Daniela",
+    "Telefone": "2253-5151",
+    "DataNascimento": "2000-10-20T00:00:00"
+    }
+    ]
+   } 
+   
