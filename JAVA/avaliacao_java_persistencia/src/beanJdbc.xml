@@ -17,11 +17,12 @@ http://www.springframework.org/schema/context/spring-context-3.0.xsd">
 		<property name="username" value="root" />
 		<property name="password" value="root" />
 	</bean>
-	<bean id="jdbcEscola" class="br.com.fiap.jdbc.JdbcEscola">
+	<bean id="AppEscolaCursos" class="br.com.fiap.jdbc.JdbcCurso">
 		<property name="dataSource" ref="cnDataSource" />
 	</bean>
-	<!--  <bean id="jdbcDisciplinaDao"
-		class="br.com.fiap.jdbc.JdbcDisciplinaDao">
+	<bean id="AppEscolaCursosDao" class="br.com.fiap.jdbc.JdbcEscolaCurso">
 		<property name="dataSource" ref="cnDataSource" />
-	</bean> -->
+	</bean>
+	<!-- <bean id="jdbcDisciplinaDao" class="br.com.fiap.jdbc.JdbcDisciplinaDao"> 
+		<property name="dataSource" ref="cnDataSource" /> </bean> -->
 </beans>

@@ -8,7 +8,9 @@ import javax.sql.DataSource;
 
 import org.springframework.jdbc.core.JdbcTemplate;
 
+import br.com.fiap.entity.Curso;
 import br.com.fiap.entity.Escola;
+import br.com.fiap.mapper.CursoMapper;
 import br.com.fiap.mapper.EscolaMapper;
 
 public class JdbcEscola implements Serializable {
@@ -20,34 +22,12 @@ public class JdbcEscola implements Serializable {
 		this.jdbcTemplate = new JdbcTemplate(dataSource);
 	}
 
-	public void incluirEscola(Escola escola) throws Exception {
+	public void incluirCurso(Curso curso) throws Exception {
 		try {
-			String sql = "INSERT INTO escolas (nome) VALUES (?)";
-			this.jdbcTemplate.update(sql, escola.getNome());
+			String sql = "INSERT INTO curso (nome, id_escola) VALUES (?, ?)";
+			this.jdbcTemplate.update(sql, curso.getNome(), curso.getEscola());
 		} catch (Exception e) {
 			throw e;
 		}
-	}
-
-	public Escola buscarEscola(int id) throws Exception {
-		Escola escola = null;
-		try {
-			String query = "SELECT * FROM escolas WHERE ID = ?";
-			escola = this.jdbcTemplate.queryForObject(query, new Integer[] { id }, new EscolaMapper());
-		} catch (Exception e) {
-			throw e;
-		}
-
-		return escola;
-	}
-
-	public List<Escola> listarEscolas() throws Exception {
-		List<Escola> escolas = new ArrayList<>();
-		try {
-			escolas = this.jdbcTemplate.query("SELECT * FROM escolas", new EscolaMapper());
-		} catch (Exception e) {
-			throw e;
-		}
-		return escolas;
 	}
 }

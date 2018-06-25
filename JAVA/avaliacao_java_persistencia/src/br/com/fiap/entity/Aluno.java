@@ -10,11 +10,10 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinColumns;
 
 @Entity
 @Table(name="alunos", catalog="dbescola")
@@ -26,13 +25,41 @@ public class Aluno implements Serializable {
 	private int id;	
 	
 	private String nome;
+	private String endereco;
+	private int idade;
 	
-	@ManyToMany(fetch=FetchType.LAZY, cascade=CascadeType.ALL)
-	@JoinTable(name="alunos_cursos", catalog="dbescolas", joinColumns = 
-	{@JoinColumn(name="id_aluno", nullable=false, updatable=false)},
-	inverseJoinColumns = {@JoinColumn(name="id_curso", nullable=false, updatable=false)} )
-	private Set<Curso> curso = new HashSet<>();
+	public String getEndereco() {
+		return endereco;
+	}
+	public void setEndereco(String endereco) {
+		this.endereco = endereco;
+	}
+	public int getIdade() {
+		return idade;
+	}
+	public void setIdade(int idade) {
+		this.idade = idade;
+	}
+	public Set<Curso> getCurso() {
+		return cursos;
+	}
+	public void setCurso(Set<Curso> curso) {
+		this.cursos = curso;
+	}
 	
+	@ManyToMany(cascade = CascadeType.ALL)
+	@JoinTable(name = "alunos_cursos",
+        joinColumns = @JoinColumn(name = "id_aluno"),
+        inverseJoinColumns = @JoinColumn(name = "id_curso")
+    )
+	private Set<Curso> cursos = new HashSet<>();
+	
+	public Set<Curso> getCursos() {
+		return cursos;
+	}
+	public void setCursos(Set<Curso> cursos) {
+		this.cursos = cursos;
+	}
 	public int getId() {
 		return id;
 	}
@@ -45,6 +72,5 @@ public class Aluno implements Serializable {
 	public void setNome(String nome) {
 		this.nome = nome;
 	}
-	
 	
 }
