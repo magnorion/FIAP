@@ -1,10 +1,13 @@
 package br.com.fiap.app;
 
-import java.util.Set;
+import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
+import javax.swing.Icon;
+import javax.swing.JOptionPane;
+import javax.swing.UIManager;
 
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
@@ -15,60 +18,125 @@ import br.com.fiap.entity.Escola;
 import br.com.fiap.helper.AlunoHelper;
 import br.com.fiap.helper.EscolaHelper;
 import br.com.fiap.jdbc.JdbcCurso;
+import br.com.fiap.mapper.CursoMapper;
 
 public class MainApp {
 	
 	public static void main(String[] args) {
-		
-		/**
-		 * Inicia a aplicação com os dados inciais
-		 * Cadastra escola, curso e alunos
-		 */
-		
-		// Escola escola = bootstrapEscola();
-		// Curso curso = bootstrapCurso(escola);
-		// bootstrapAluno(curso);
-		
-		
-		/**
-		 * Busca de dados
-		 */
-		
-		// listarAlunos();
-		listarEscolas();
-		
+		startApp();
 	}
 	
-	public static Escola bootstrapEscola() {
-		EscolaHelper helper = new EscolaHelper(setEm()); 
-		Escola escola = new Escola();
-		escola.setNome("Escola Legal");
-		escola.setEndereco("Um end qualquer");
-		
-		System.out.println(helper.salvar(escola));
-		
-		return escola;
+	// VIEW INICIAL DO APP
+	public static void startApp() {
+		Icon icon = UIManager.getIcon("OptionPane.alertIcon");  
+        String[] possibilities = {
+        		"Cadastrar uma escola",
+        		"Escolher uma escola"
+        };
+        
+        String opcao = (String) JOptionPane.showInputDialog(null,  
+                "Escolha uma opção", "Opções",  
+                JOptionPane.PLAIN_MESSAGE, icon, possibilities, "Opções");
+        
+        rotas(opcao, null);
 	}
 	
-	public static Curso bootstrapCurso(Escola escola) {
+	/**
+	 * 
+	 * CURSOS
+	 */
+	
+	public static void cadastrarCurso(Escola escola) {
 		Curso curso = new Curso();
 		
+		String nome = JOptionPane.showInputDialog("Digite o nome do curso.");
+		
 		try {
-			curso.setNome("ADMINISTRAÇÃO");
+			curso.setNome(nome);
 			curso.setEscola(escola);
 			
 			JdbcCurso dao = dao();
 			dao.incluirCurso(curso);
 			
-			System.out.println("Curso cadastrado!");
+			JOptionPane.showMessageDialog(null, "Curso cadastrado com sucesso!");
+			viewEscola(escola);
 			
 		} catch (Exception e) {
 			// TODO: handle exception
 			e.printStackTrace();
 		}
-		
-		return curso;
 	}
+	
+	private static void listarCursos(Escola escola) {
+		try {
+			JdbcCurso dao = dao();
+			
+			Icon icon = UIManager.getIcon("OptionPane.alertIcon"); 
+			CursoMapper opcao = (CursoMapper) JOptionPane.showInputDialog(null,  
+	                "Escolha uma opção", "Opções",  
+	                JOptionPane.PLAIN_MESSAGE, icon, dao.listarCursos(escola.getId()).toArray(), "Opções");
+			
+			// viewEscola(opcao);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	/**
+	 * 
+	 * ESCOLA
+	 */
+	
+	// VIEW ESCOLA
+	public static void viewEscola(Escola escola) {
+		Icon icon = UIManager.getIcon("OptionPane.alertIcon");  
+        String[] possibilities = {
+        		"Cadastrar curso",
+        		"Listar Cursos",
+        		"Cadastrar Aluno",
+        		"Listar Alunos",
+        		"Remover Escola"
+        };
+        
+        String opcao = (String) JOptionPane.showInputDialog(null,  
+                "Escolha uma opção", "Opções",  
+                JOptionPane.PLAIN_MESSAGE, icon, possibilities, "Opções");
+        
+        rotas(opcao, escola);
+	}
+	
+	public static void cadastraEscola() {
+		EscolaHelper helper = new EscolaHelper(setEm());
+		Escola escola = new Escola();
+		
+		String nome = JOptionPane.showInputDialog("Digite o nome da escola.");
+		String endereco = JOptionPane.showInputDialog("Digite o endereço da escola.");
+		
+		escola.setNome(nome);
+		escola.setEndereco(endereco);
+		helper.salvar(escola);
+		
+		JOptionPane.showMessageDialog(null, "Escola cadastrada com sucesso!");
+		rotas("inicio", null);
+	}
+	
+	private static void listarEscolas() {
+		EscolaHelper helper = new EscolaHelper(setEm());
+		
+		List<Escola> escolas = helper.listarEscolas();
+		
+		Icon icon = UIManager.getIcon("OptionPane.alertIcon"); 
+		Escola opcao = (Escola) JOptionPane.showInputDialog(null,  
+                "Escolha uma opção", "Opções",  
+                JOptionPane.PLAIN_MESSAGE, icon, escolas.toArray(), "Opções");
+		
+		viewEscola(opcao);
+	}
+	
+	/**
+	 * 
+	 * ALUNOS
+	 */
 	
 	public static void bootstrapAluno(Curso curso) {
 		AlunoHelper helper = new AlunoHelper(setEm()); 
@@ -95,17 +163,6 @@ public class MainApp {
 		}
 	}
 	
-	private static void listarEscolas() {
-		EscolaHelper helper = new EscolaHelper(setEm());
-
-		for (Escola escola : helper.listarEscolas()) {
-			System.out.println("Id da escola: " + escola.getId());
-			System.out.println("Nome da escola: " + escola.getNome());
-			System.out.println("Endereço: " + escola.getEndereco());
-			System.out.println("====");
-		}
-	}
-	
 	/**
 	 * SetEm
 	 * @return EntityManager
@@ -126,5 +183,29 @@ public class MainApp {
 		JdbcCurso dao = (JdbcCurso) context.getBean("AppEscolaCursos");
 		
 		return dao;
+	}
+	
+	/**
+	 * Rotas da aplicação
+	 * @param String opt
+	 */
+	public static void rotas(String opt, Object entity) {
+		switch (opt) {
+			case "Cadastrar uma escola":
+				cadastraEscola();
+				break;
+			case "Escolher uma escola":
+				listarEscolas();
+				break;
+			case "Cadastrar curso":
+				cadastrarCurso((Escola) entity);
+				break;
+			case "Listar Cursos":
+				listarCursos((Escola) entity);
+				break;
+			default:
+				startApp();
+				break;
+		}
 	}
 }

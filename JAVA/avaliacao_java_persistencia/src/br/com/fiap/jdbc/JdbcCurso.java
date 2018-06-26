@@ -42,15 +42,15 @@ public class JdbcCurso implements Serializable{
 		return curso;
 	}
 
-	public List<Curso> listarCursos(int id_escola) throws Exception {
-		List<Curso> cursos = new ArrayList<>();
+	public List<CursoMapper> listarCursos(int id_escola) throws Exception {
+		List<CursoMapper> cursos = new ArrayList<CursoMapper>();
 		try {
-			cursos = (List<Curso>) this.jdbcTemplate.queryForObject(
+			cursos =  (List<CursoMapper>) this.jdbcTemplate.queryForObject(
 					"SELECT * FROM cursos WHERE id_escola = ?", 
 					new Integer[] {id_escola},
 					new CursoMapper());
 		} catch (Exception e) {
-			throw e;
+			e.printStackTrace();
 		}
 		return cursos;
 	}

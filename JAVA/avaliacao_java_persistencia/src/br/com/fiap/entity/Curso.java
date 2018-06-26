@@ -65,4 +65,10 @@ public class Curso implements Serializable {
 	public void setEscola(Escola escola) {
 		this.escola = escola;
 	}
+	
+	@Override
+	public String toString() {
+		// TODO Auto-generated method stub
+		return this.getNome();
+	}
 }
