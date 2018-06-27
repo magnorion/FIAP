@@ -47,7 +47,7 @@ public class Aluno implements Serializable {
 		this.cursos = curso;
 	}
 	
-	@ManyToMany(cascade = CascadeType.ALL)
+	@ManyToMany(cascade = CascadeType.MERGE)
 	@JoinTable(name = "alunos_cursos",
         joinColumns = @JoinColumn(name = "id_aluno"),
         inverseJoinColumns = @JoinColumn(name = "id_curso")

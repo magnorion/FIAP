@@ -1,5 +1,6 @@
 package br.com.fiap.app;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -63,19 +64,27 @@ public class MainApp {
 			e.printStackTrace();
 		}
 	}
+	
+	private static List<EscolaCursoViewModel> processoListagemCurso(Escola escola) {
+		List<EscolaCursoViewModel> cursos = new ArrayList<>();
+		try {
+			ApplicationContext context = new ClassPathXmlApplicationContext("beanJdbc.xml");
+			cursos = ((JdbcEscolaCurso) 
+					context.getBean("AppEscolaCursosDao")).lista(escola.getId());
+		} catch (Exception e) {
+			e.getMessage();
+		}
+		
+		return cursos;
+	}
 
 	private static void listarCursos(Escola escola) {
 		try {
-			
-			ApplicationContext context = new ClassPathXmlApplicationContext("beanJdbc.xml");
-			List<EscolaCursoViewModel> cursos = ((JdbcEscolaCurso) context.getBean("AppEscolaCursosDao")).lista();
-			
+			List<EscolaCursoViewModel> cursos = processoListagemCurso(escola);
 			Icon icon = UIManager.getIcon("OptionPane.alertIcon");
 			EscolaCursoViewModel opcao = (EscolaCursoViewModel) JOptionPane.showInputDialog(null,  
 	                "Escolha uma opção", "Opções",  
 	                JOptionPane.PLAIN_MESSAGE, icon, cursos.toArray(), "Opções");
-			System.out.println(opcao.getCursoNome());
-			
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -89,8 +98,13 @@ public class MainApp {
 	// VIEW ESCOLA
 	public static void viewEscola(Escola escola) {
 		Icon icon = UIManager.getIcon("OptionPane.alertIcon");
-		String[] possibilities = { "Cadastrar curso", "Listar Cursos", "Cadastrar Aluno", "Listar Alunos",
-				"Remover Escola" };
+		String[] possibilities = { 
+				"Cadastrar curso", 
+				"Listar Cursos", 
+				"Cadastrar Aluno", 
+				"Listar Alunos",
+				"Remover Escola" 
+			};
 
 		String opcao = (String) JOptionPane.showInputDialog(null, "Escolha uma opção", "Opções",
 				JOptionPane.PLAIN_MESSAGE, icon, possibilities, "Opções");
@@ -130,6 +144,33 @@ public class MainApp {
 	 * ALUNOS
 	 */
 
+	public static void cadastraAluno(Escola escola) {
+		AlunoHelper helper = new AlunoHelper(setEm());
+		Aluno aluno = new Aluno();
+		
+		String nome = JOptionPane.showInputDialog("Digite o nome do aluno.");
+		String idade = JOptionPane.showInputDialog("Digite a idade do aluno.");
+		String endereco = JOptionPane.showInputDialog("Digite o endereço do aluno.");
+		
+		List<EscolaCursoViewModel> cursos = processoListagemCurso(escola);
+		Icon icon = UIManager.getIcon("OptionPane.alertIcon");
+		EscolaCursoViewModel opcao = (EscolaCursoViewModel) JOptionPane.showInputDialog(null,  
+                "Escolha uma opção", "Opções",  
+                JOptionPane.PLAIN_MESSAGE, icon, cursos.toArray(), "Opções");
+		
+		Curso curso = new Curso();
+		curso.setId(opcao.getCursoId());
+		curso.setNome(opcao.getNome());
+		curso.setEscola(escola);
+		
+		aluno.setNome(nome);
+		aluno.setIdade(Integer.parseInt(idade));
+		aluno.setEndereco(endereco);
+
+		aluno.getCurso().add(curso);
+		System.out.println(helper.salvar(aluno));
+	}
+	
 	public static void bootstrapAluno(Curso curso) {
 		AlunoHelper helper = new AlunoHelper(setEm());
 
@@ -199,6 +240,8 @@ public class MainApp {
 		case "Listar Cursos":
 			listarCursos((Escola) entity);
 			break;
+		case "Cadastrar Aluno":
+			cadastraAluno((Escola) entity);
 		default:
 			startApp();
 			break;

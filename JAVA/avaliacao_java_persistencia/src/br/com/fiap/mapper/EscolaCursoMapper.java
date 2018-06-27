@@ -21,6 +21,7 @@ public class EscolaCursoMapper implements Serializable, RowMapper<EscolaCursoVie
 		vm.setNome(rs.getString("nomeEscola"));
 		vm.setCursoNome(rs.getString("nomeCurso"));
 		vm.setQtd(rs.getInt("qtd"));
+		vm.setCursoId(rs.getInt("id"));
 		return vm;
 	}
 	

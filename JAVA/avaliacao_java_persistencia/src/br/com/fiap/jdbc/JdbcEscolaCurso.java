@@ -20,15 +20,18 @@ public class JdbcEscolaCurso implements Serializable {
 		this.jdbcTemplate = new JdbcTemplate(data);
 	}
 	
-	public List<EscolaCursoViewModel> lista() {
+	public List<EscolaCursoViewModel> lista(int id) {
 		List<EscolaCursoViewModel> escolas = new ArrayList<>();
 		try {
-			escolas = this.jdbcTemplate.query("SELECT escolas.nome AS nomeEscola, cursos.nome AS nomeCurso, COUNT(cursos.id) AS qtd"
-					+ " FROM escolas, cursos WHERE escolas.id = cursos.id_escola GROUP BY cursos.id", new EscolaCursoMapper());
+			 escolas = (List<EscolaCursoViewModel>) this.jdbcTemplate.query(
+					"SELECT escolas.nome AS nomeEscola, cursos.nome AS nomeCurso, cursos.id, COUNT(cursos.id) AS qtd"
+					+ " FROM escolas, cursos WHERE escolas.id = cursos.id_escola AND cursos.id_escola = ? GROUP BY cursos.id",
+					new Integer[] {id},
+					new EscolaCursoMapper());
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		
+		System.out.println(escolas);
 		return escolas;
 	}
 }

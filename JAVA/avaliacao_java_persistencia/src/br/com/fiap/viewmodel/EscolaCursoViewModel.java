@@ -8,7 +8,16 @@ public class EscolaCursoViewModel implements Serializable {
 	private String nome;
 	private String cursoNome;
 	private int qtd;
+	private int cursoId;
 	
+	public int getCursoId() {
+		return cursoId;
+	}
+
+	public void setCursoId(int cursoId) {
+		this.cursoId = cursoId;
+	}
+
 	public String getNome() {
 		return nome;
 	}
