@@ -6,6 +6,7 @@ public class EscolaCursoViewModel implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
 	private String nome;
+	private String cursoNome;
 	private int qtd;
 	
 	public String getNome() {
@@ -22,6 +23,20 @@ public class EscolaCursoViewModel implements Serializable {
 	
 	public void setQtd(int qtd) {
 		this.qtd = qtd;
+	}
+	
+	public String getCursoNome() {
+		return cursoNome;
+	}
+
+	public void setCursoNome(String cursoNome) {
+		this.cursoNome = cursoNome;
+	}
+	
+	@Override
+	public String toString() {
+		// TODO Auto-generated method stub
+		return this.getCursoNome();
 	}
 	
 }

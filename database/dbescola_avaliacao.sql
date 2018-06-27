@@ -1,4 +1,4 @@
-DROP DATABASE dbescola;
+DROP DATABASE IF EXISTS dbescola;
 
 CREATE DATABASE dbescola;
 
@@ -19,9 +19,9 @@ CREATE TABLE IF NOT EXISTS escolas (
 
 CREATE TABLE IF NOT EXISTS cursos (
 	id INT AUTO_INCREMENT PRIMARY KEY,
-    nome VARCHAR(50)
-    -- id_escola INT(11) NOT NULL,
-    -- FOREIGN KEY(id_escola) REFERENCES escolas(id)
+    nome VARCHAR(50),
+    id_escola INT(11) NOT NULL,
+    FOREIGN KEY(id_escola) REFERENCES escolas(id)
 );
 
 CREATE TABLE IF NOT EXISTS  alunos_cursos(

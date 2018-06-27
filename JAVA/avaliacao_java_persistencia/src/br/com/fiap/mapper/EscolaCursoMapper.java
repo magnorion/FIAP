@@ -18,7 +18,8 @@ public class EscolaCursoMapper implements Serializable, RowMapper<EscolaCursoVie
 	public EscolaCursoViewModel mapRow(ResultSet rs, int arg1) throws SQLException {
 		EscolaCursoViewModel vm = new EscolaCursoViewModel();
 		
-		vm.setNome(rs.getString("nome"));
+		vm.setNome(rs.getString("nomeEscola"));
+		vm.setCursoNome(rs.getString("nomeCurso"));
 		vm.setQtd(rs.getInt("qtd"));
 		return vm;
 	}
