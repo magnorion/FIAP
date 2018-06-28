@@ -6,13 +6,13 @@ import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -27,7 +27,17 @@ public class Aluno implements Serializable {
 	private String nome;
 	private String endereco;
 	private int idade;
-	private float nota;
+	
+	@ManyToOne
+	private Escola escola;
+	
+	public Escola getEscola() {
+		return escola;
+	}
+	
+	public void setEscola(Escola escola) {
+		this.escola = escola;
+	}
 	
 	public String getEndereco() {
 		return endereco;
@@ -46,14 +56,6 @@ public class Aluno implements Serializable {
 	}
 	public void setCurso(Set<Curso> curso) {
 		this.cursos = curso;
-	}
-	
-	public float getNota() {
-		return nota;
-	}
-	
-	public void setNota(float nota) {
-		this.nota = nota;
 	}
 	
 	@ManyToMany(cascade = CascadeType.MERGE)

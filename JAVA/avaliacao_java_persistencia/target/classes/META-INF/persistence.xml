@@ -6,6 +6,8 @@
 	<persistence-unit name="avaliacaojavapersistencia">
 		<class>br.com.fiap.entity.Escola</class>
 		<class>br.com.fiap.entity.Curso</class>
+		<class>br.com.fiap.entity.Aluno</class>
+		<class>br.com.fiap.entity.AlunosCursos</class>
 		<properties>
 			<property name="hibbernate.hbm2ddl.auto" value="update" />
 			<property name="hibbernate.format_sql" value="true" />
