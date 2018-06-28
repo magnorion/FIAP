@@ -27,6 +27,7 @@ public class Aluno implements Serializable {
 	private String nome;
 	private String endereco;
 	private int idade;
+	private float nota;
 	
 	public String getEndereco() {
 		return endereco;
@@ -45,6 +46,14 @@ public class Aluno implements Serializable {
 	}
 	public void setCurso(Set<Curso> curso) {
 		this.cursos = curso;
+	}
+	
+	public float getNota() {
+		return nota;
+	}
+	
+	public void setNota(float nota) {
+		this.nota = nota;
 	}
 	
 	@ManyToMany(cascade = CascadeType.MERGE)

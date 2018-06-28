@@ -42,4 +42,16 @@ public class AlunoHelper implements Serializable{
 			return e.getMessage();
 		}
 	}
+	
+	public String nota(float nota, int id) {
+		try {
+			Aluno aluno = em.find(Aluno.class, id);
+			em.getTransaction().begin();
+			aluno.setNota(nota);
+			em.getTransaction().commit();
+			return "Nota atualizada!";
+		} catch (Exception e) {
+			return e.getMessage();
+		}
+	}
 }

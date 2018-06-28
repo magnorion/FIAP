@@ -8,7 +8,8 @@ CREATE TABLE IF NOT EXISTS alunos (
 	id INT AUTO_INCREMENT PRIMARY KEY,
     nome VARCHAR(50),
     idade INT(2),
-    endereco VARCHAR(50)
+    endereco VARCHAR(50),
+    nota FLOAT(2)
 );
 
 CREATE TABLE IF NOT EXISTS escolas (

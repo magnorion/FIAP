@@ -104,8 +104,7 @@ public class MainApp {
 				"Cadastrar curso", 
 				"Listar Cursos", 
 				"Cadastrar Aluno", 
-				"Listar Alunos",
-				"Remover Escola" 
+				"Listar Alunos"
 			};
 
 		String opcao = (String) JOptionPane.showInputDialog(null, "Escolha uma opção", "Opções",
@@ -179,8 +178,9 @@ public class MainApp {
 			List<CursoAlunoViewModel> alunos = processoListagemAluno(escola);
 			Icon icon = UIManager.getIcon("OptionPane.alertIcon");
 			CursoAlunoViewModel opcao = (CursoAlunoViewModel) JOptionPane.showInputDialog(null,  
-	                "Escolha uma opção", "Opções",  
+	                "Escolha uma aluno para dar uma nota.", "Alunos",  
 	                JOptionPane.PLAIN_MESSAGE, icon, alunos.toArray(), "Opções");
+			aplicarNota(opcao, escola);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -198,20 +198,18 @@ public class MainApp {
 		
 		return alunos;
 	}
-
-	/*
-	private static void listarAlunos() {
-		AlunoHelper helper = new AlunoHelper(setEm());
-
-		for (Aluno aluno : helper.listarAlunos()) {
-			System.out.println("Id do aluno: " + aluno.getId());
-			System.out.println("Nome do aluno: " + aluno.getNome());
-			System.out.println("Idade do aluno: " + aluno.getIdade());
-			System.out.println("Endereço: " + aluno.getEndereco());
-			System.out.println("====");
+	
+	public static void aplicarNota(CursoAlunoViewModel aluno, Escola escola) {
+		String nota = JOptionPane.showInputDialog("Digite a nota do aluno");
+		
+		try {
+			AlunoHelper helper = new AlunoHelper(setEm());
+			JOptionPane.showMessageDialog(null, helper.nota(Float.parseFloat(nota), aluno.getId()));
+			viewEscola(escola);
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
 	}
-	*/
 
 	/**
 	 * SetEm

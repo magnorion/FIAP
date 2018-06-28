@@ -26,9 +26,9 @@ public class JdbcAluno implements Serializable {
 		
 		try {
 			alunos =  (List<CursoAlunoViewModel>) this.jdbcTemplate.query(
-					"SELECT alunos.nome, alunos.id, alunos.idade, alunos.endereco, "
-					+ "escolas.id AS cursoId, cursos.id AS identf, escolas.nome AS cursoNome"
-					+ " FROM alunos, escolas, cursos WHERE escolas.id = ? AND cursos.id_escola = escolas.id GROUP BY alunos.nome", 
+					"SELECT alunos.nome, alunos.id, alunos.idade, alunos.endereco,"
+					+ " escolas.id AS cursoId, cursos.id AS identf, escolas.nome AS cursoNome"
+					+ " FROM alunos, escolas, cursos WHERE escolas.id = ? AND cursos.id_escola = escolas.id", 
 					new Integer[] {id},
 					new CursoAlunoMapper());
 		} catch (Exception e) {
