@@ -5,9 +5,9 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="
 http://www.springframework.org/schema/beans
-http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+http://www.springframework.org/schema/beans/spring-beans-3.1.xsd
 http://www.springframework.org/schema/context
-http://www.springframework.org/schema/context/spring-context-3.0.xsd">
+http://www.springframework.org/schema/context/spring-context-3.1.xsd">
 	<bean id="cnDataSource"
 		class="org.springframework.jdbc.datasource.DriverManagerDataSource">
 		<property name="driverClassName"
@@ -15,12 +15,15 @@ http://www.springframework.org/schema/context/spring-context-3.0.xsd">
 		<property name="url"
 			value="jdbc:mysql://localhost:3306/dbescola" />
 		<property name="username" value="root" />
-		<property name="password" value="root" />
+		<property name="password" value="fiap" />
 	</bean>
 	<bean id="AppEscolaCursos" class="br.com.fiap.jdbc.JdbcCurso">
 		<property name="dataSource" ref="cnDataSource" />
 	</bean>
 	<bean id="AppEscolaCursosDao" class="br.com.fiap.jdbc.JdbcEscolaCurso">
+		<property name="dataSource" ref="cnDataSource" />
+	</bean>
+	<bean id="AppAlunosDao" class="br.com.fiap.jdbc.JdbcAluno">
 		<property name="dataSource" ref="cnDataSource" />
 	</bean>
 	<!-- <bean id="jdbcDisciplinaDao" class="br.com.fiap.jdbc.JdbcDisciplinaDao"> 

@@ -31,7 +31,6 @@ public class JdbcEscolaCurso implements Serializable {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		System.out.println(escolas);
 		return escolas;
 	}
 }

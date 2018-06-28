@@ -3,8 +3,9 @@ package br.com.fiap.helper;
 import java.io.Serializable;
 import java.util.List;
 
+import javax.management.Query;
 import javax.persistence.EntityManager;
-import javax.persistence.TypedQuery;
+import javax.persistence.criteria.CriteriaBuilder;
 
 import br.com.fiap.entity.Aluno;
 import br.com.fiap.entity.Escola;
@@ -28,11 +29,6 @@ public class AlunoHelper implements Serializable{
 		} catch (Exception e) {
 			return e.getMessage();
 		}
-	}
-	
-	public List<Aluno> listarAlunos() {
-		TypedQuery<Aluno> query = em.createQuery("SELECT s FROM Aluno s", Aluno.class);
-		return query.getResultList();
 	}
 	
 	public String remover(int id) {

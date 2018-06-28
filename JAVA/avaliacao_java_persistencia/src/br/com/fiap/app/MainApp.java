@@ -18,8 +18,10 @@ import br.com.fiap.entity.Curso;
 import br.com.fiap.entity.Escola;
 import br.com.fiap.helper.AlunoHelper;
 import br.com.fiap.helper.EscolaHelper;
+import br.com.fiap.jdbc.JdbcAluno;
 import br.com.fiap.jdbc.JdbcCurso;
 import br.com.fiap.jdbc.JdbcEscolaCurso;
+import br.com.fiap.viewmodel.CursoAlunoViewModel;
 import br.com.fiap.viewmodel.EscolaCursoViewModel;
 
 public class MainApp {
@@ -129,7 +131,6 @@ public class MainApp {
 
 	private static void listarEscolas() {
 		EscolaHelper helper = new EscolaHelper(setEm());
-
 		List<Escola> escolas = helper.listarEscolas();
 
 		Icon icon = UIManager.getIcon("OptionPane.alertIcon");
@@ -168,22 +169,37 @@ public class MainApp {
 		aluno.setEndereco(endereco);
 
 		aluno.getCurso().add(curso);
-		System.out.println(helper.salvar(aluno));
+		JOptionPane.showMessageDialog(null, helper.salvar(aluno));
+		
+		viewEscola(escola);
 	}
 	
-	public static void bootstrapAluno(Curso curso) {
-		AlunoHelper helper = new AlunoHelper(setEm());
-
-		Aluno aluno = new Aluno();
-		aluno.setNome("Cazalbe");
-		aluno.setIdade(45);
-		aluno.setEndereco("Rua: Praça nossa");
-
-		aluno.getCurso().add(curso);
-
-		System.out.println(helper.salvar(aluno));
+	private static void listaAlunos(Escola escola) {
+		try {
+			List<CursoAlunoViewModel> alunos = processoListagemAluno(escola);
+			Icon icon = UIManager.getIcon("OptionPane.alertIcon");
+			CursoAlunoViewModel opcao = (CursoAlunoViewModel) JOptionPane.showInputDialog(null,  
+	                "Escolha uma opção", "Opções",  
+	                JOptionPane.PLAIN_MESSAGE, icon, alunos.toArray(), "Opções");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	private static List<CursoAlunoViewModel> processoListagemAluno(Escola escola) {
+		List<CursoAlunoViewModel> alunos = new ArrayList<>();
+		try {
+			ApplicationContext context = new ClassPathXmlApplicationContext("beanJdbc.xml");
+			alunos = ((JdbcAluno) 
+					context.getBean("AppAlunosDao")).lista(escola.getId());
+		} catch (Exception e) {
+			e.getMessage();
+		}
+		
+		return alunos;
 	}
 
+	/*
 	private static void listarAlunos() {
 		AlunoHelper helper = new AlunoHelper(setEm());
 
@@ -195,6 +211,7 @@ public class MainApp {
 			System.out.println("====");
 		}
 	}
+	*/
 
 	/**
 	 * SetEm
@@ -202,7 +219,7 @@ public class MainApp {
 	 * @return EntityManager
 	 */
 	public static EntityManager setEm() {
-		EntityManagerFactory emf = Persistence.createEntityManagerFactory("avaliacao_java_persistencia");
+		EntityManagerFactory emf = Persistence.createEntityManagerFactory("avaliacaojavapersistencia");
 		EntityManager em = emf.createEntityManager();
 
 		return em;
@@ -242,6 +259,10 @@ public class MainApp {
 			break;
 		case "Cadastrar Aluno":
 			cadastraAluno((Escola) entity);
+			break;
+		case "Listar Alunos":
+			listaAlunos((Escola) entity);
+			break;
 		default:
 			startApp();
 			break;

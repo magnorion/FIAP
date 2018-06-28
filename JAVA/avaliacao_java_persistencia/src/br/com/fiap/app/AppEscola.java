@@ -1,21 +1,7 @@
 package br.com.fiap.app;
 
-import java.util.List;
-
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
-
-import org.springframework.context.support.ClassPathXmlApplicationContext;
-import org.springframework.context.ApplicationContext;
-
-import br.com.fiap.entity.Escola;
-import br.com.fiap.helper.EscolaHelper;
-import br.com.fiap.jdbc.JdbcEscolaCurso;
-import br.com.fiap.viewmodel.EscolaCursoViewModel;
-
 public class AppEscola {
-
+	/*
 	private EntityManager em;
 
 	public static void main(String[] args) {
@@ -25,6 +11,7 @@ public class AppEscola {
 		// removerEscola();
 	}
 
+	
 	private static void listarEscolas() {
 		EscolaHelper helper = new EscolaHelper(setEm());
 
@@ -35,8 +22,10 @@ public class AppEscola {
 			System.out.println("====");
 		}
 	}
+	
 
 	private static void listarEscolasCursos() {
+		
 		try {
 			ApplicationContext context = new ClassPathXmlApplicationContext("beanJdbc.xml");
 			List<EscolaCursoViewModel> escolas = ((JdbcEscolaCurso) context.getBean("AppEscolaCursosDao"))
@@ -49,6 +38,7 @@ public class AppEscola {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+		
 	}
 
 	private static void removerEscola() {
@@ -64,5 +54,6 @@ public class AppEscola {
 
 		return em;
 	}
+	*/
 
 }
