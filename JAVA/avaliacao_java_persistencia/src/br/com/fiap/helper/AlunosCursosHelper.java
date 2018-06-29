@@ -34,14 +34,26 @@ public class AlunosCursosHelper implements Serializable {
 			alunosCursos.setAluno(aluno);
 			alunosCursos.setCurso(curso);
 			
-			AlunosCursos teste = em.find(AlunosCursos.class, alunosCursos);
+			AlunosCursos alunoCurso = em.find(AlunosCursos.class, alunosCursos);
 			em.getTransaction().begin();
-			teste.setNota(nota);
+			alunoCurso.setNota(nota);
 			em.getTransaction().commit();
 			return "Nota cadastrada com sucesso!";
 			
 		} catch (Exception e) {
 			return e.getMessage();
 		}
+	}
+	
+	public Float mostraCursoNota(Aluno aluno, Curso curso) {
+		Float nota = new Float(0);
+		AlunosCursos alunosCursos = new AlunosCursos();
+		alunosCursos.setAluno(aluno);
+		alunosCursos.setCurso(curso);
+		
+		AlunosCursos alunoCurso = em.find(AlunosCursos.class, alunosCursos);
+		nota = alunoCurso.getNota();
+		
+		return nota;
 	}
 }

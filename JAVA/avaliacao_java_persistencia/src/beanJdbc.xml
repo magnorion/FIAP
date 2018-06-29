@@ -26,6 +26,7 @@ http://www.springframework.org/schema/context/spring-context-3.1.xsd">
 	<bean id="AppAlunosDao" class="br.com.fiap.jdbc.JdbcAluno">
 		<property name="dataSource" ref="cnDataSource" />
 	</bean>
-	<!-- <bean id="jdbcDisciplinaDao" class="br.com.fiap.jdbc.JdbcDisciplinaDao"> 
-		<property name="dataSource" ref="cnDataSource" /> </bean> -->
+	<bean id="AppAlunosCursosDao" class="br.com.fiap.jdbc.JdbcAlunoCursos">
+		<property name="dataSource" ref="cnDataSource" />
+	</bean>
 </beans>

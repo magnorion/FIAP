@@ -2,6 +2,7 @@ package br.com.fiap.app;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -17,8 +18,10 @@ import br.com.fiap.entity.Aluno;
 import br.com.fiap.entity.Curso;
 import br.com.fiap.entity.Escola;
 import br.com.fiap.helper.AlunoHelper;
+import br.com.fiap.helper.AlunosCursosHelper;
 import br.com.fiap.helper.EscolaHelper;
 import br.com.fiap.jdbc.JdbcAluno;
+import br.com.fiap.jdbc.JdbcAlunoCursos;
 import br.com.fiap.jdbc.JdbcCurso;
 import br.com.fiap.jdbc.JdbcEscolaCurso;
 import br.com.fiap.viewmodel.CursoAlunoViewModel;
@@ -74,7 +77,22 @@ public class MainApp {
 			cursos = ((JdbcEscolaCurso) 
 					context.getBean("AppEscolaCursosDao")).lista(escola.getId());
 		} catch (Exception e) {
-			e.getMessage();
+			e.printStackTrace();
+		}
+		
+		return cursos;
+	}
+	
+	private static List<CursoAlunoViewModel> processoListagemCursoAluno(Aluno aluno) {
+		List<CursoAlunoViewModel> cursos = new ArrayList<>();
+		
+		try {
+			ApplicationContext context = new ClassPathXmlApplicationContext("beanJdbc.xml");
+			cursos = ((JdbcAlunoCursos) 
+					context.getBean("AppAlunosCursosDao")).lista(aluno.getId());
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
 		}
 		
 		return cursos;
@@ -106,11 +124,12 @@ public class MainApp {
 				"Cadastrar curso", 
 				"Listar Cursos", 
 				"Cadastrar Aluno", 
-				"Listar Alunos"
+				"Listar Alunos",
+				"Menu principal"
 			};
 
-		String opcao = (String) JOptionPane.showInputDialog(null, "Escolha uma opção", "Opções",
-				JOptionPane.PLAIN_MESSAGE, icon, possibilities, "Opções");
+		String opcao = (String) JOptionPane.showInputDialog(null, "Escola: " + escola.getNome(), "Opções",
+				JOptionPane.PLAIN_MESSAGE, icon, possibilities, "Menu Escola");
 
 		rotas(opcao, escola);
 	}
@@ -150,14 +169,22 @@ public class MainApp {
 	public static void viewAluno(Aluno aluno) {
 		Icon icon = UIManager.getIcon("OptionPane.alertIcon");
 		String[] possibilities = { 
-				"Cadastrar " + aluno.getNome() + " em um curso", 
-				"Avaliação de nota"
+				"Cadastrar aluno em um curso",
+				"Avaliação de nota",
+				"Cursos do aluno",
+				"Voltar para menu escola"
 			};
 
 		String opcao = (String) JOptionPane.showInputDialog(null, "Aluno: " + aluno.getNome(), "Opções",
 				JOptionPane.PLAIN_MESSAGE, icon, possibilities, "Opções");
 
-		rotas(opcao, aluno);
+		if (opcao.equals("Avaliação de nota")) {
+			aplicarNota(aluno, aluno.getEscola());
+		} else if (opcao.equals("Voltar para menu escola")) {
+			viewEscola(aluno.getEscola());
+		} else {
+			rotas(opcao, aluno);
+		}
 	}
 
 	public static void cadastraAluno(Escola escola) {
@@ -188,7 +215,7 @@ public class MainApp {
                 JOptionPane.PLAIN_MESSAGE, icon, cursos.toArray(), "Opções");
 		
 		JOptionPane.showMessageDialog(null, helper.cadastraCurso(aluno, opcao.getCursoId()));
-		viewEscola(aluno.getEscola());
+		viewAluno(aluno);
 	}
 	
 	private static void listaAlunos(Escola escola) {
@@ -198,9 +225,10 @@ public class MainApp {
 			CursoAlunoViewModel opcao = (CursoAlunoViewModel) JOptionPane.showInputDialog(null,  
 	                "Escolha uma aluno para dar uma nota.", "Alunos",  
 	                JOptionPane.PLAIN_MESSAGE, icon, alunos.toArray(), "Opções");
-			//aplicarNota(opcao, escola);
+			
 			Aluno aluno = pegarAluno(opcao.getId());
-			cadastraAlunoNoCurso(aluno);
+			
+			viewAluno(aluno);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -224,18 +252,58 @@ public class MainApp {
 		return alunos;
 	}
 	
-	public static void aplicarNota(CursoAlunoViewModel aluno, Escola escola) {
-		String nota = JOptionPane.showInputDialog("Digite a nota do aluno");
+	public static void aplicarNota(Aluno aluno, Escola escola) {
+		Set<Curso> cursos = aluno.getCursos();
+		Icon icon = UIManager.getIcon("OptionPane.alertIcon");
+		Curso curso = (Curso) JOptionPane.showInputDialog(null,  
+                "Escolha um curso", "Opções",  
+                JOptionPane.PLAIN_MESSAGE, icon, cursos.toArray(), "Opções");
 		
-		/*
+		Boolean flag = true;
+		String nota;
+		Float notaFinal = new Float(0);
+		
+		while (flag) {
+			nota = JOptionPane.showInputDialog("Digite a nota do aluno");
+			notaFinal = Float.parseFloat(nota);
+			
+			if (notaFinal > 10 || notaFinal < 0) {
+				JOptionPane.showMessageDialog(null, "Nota incorreta!\nA nota deve ser de 0 a 10");
+			} else {
+				flag = false;
+			}
+		}
+		
 		try {
-			AlunoHelper helper = new AlunoHelper(setEm());
-			JOptionPane.showMessageDialog(null, helper.nota(Float.parseFloat(nota), aluno.getId()));
-			viewEscola(escola);
+			AlunosCursosHelper helper = new AlunosCursosHelper(setEm());
+			JOptionPane.showMessageDialog(null, helper.nota(aluno.getId(), curso.getId(), notaFinal));
+			
+			viewAluno(aluno);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		*/
+	}
+	
+	public static void cursosDoAluno(Aluno aluno) {
+		Set<Curso> cursos = aluno.getCursos();
+		Icon icon = UIManager.getIcon("OptionPane.alertIcon");
+		Curso curso = (Curso) JOptionPane.showInputDialog(null,  
+                "Escolha um curso", "Opções",  
+                JOptionPane.PLAIN_MESSAGE, icon, cursos.toArray(), "Opções");
+	
+		try {
+			AlunosCursosHelper helper = new AlunosCursosHelper(setEm());
+			Float nota = helper.mostraCursoNota(aluno, curso);
+			if (nota > 0) {
+				JOptionPane.showMessageDialog(null, "Neste curso, a nota do aluno é " + nota);
+			} else {
+				JOptionPane.showMessageDialog(null, "Neste curso, o aluno foi reporvado ou ainda não teve nota!");
+			}
+			
+			viewAluno(aluno);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 
 	/**
@@ -266,7 +334,7 @@ public class MainApp {
 	 * Rotas da aplicação
 	 * 
 	 * @param String
-	 *            opt
+	 * opt
 	 */
 	public static void rotas(String opt, Object entity) {
 		switch (opt) {
@@ -287,6 +355,12 @@ public class MainApp {
 			break;
 		case "Listar Alunos":
 			listaAlunos((Escola) entity);
+			break;
+		case "Cadastrar aluno em um curso":
+			cadastraAlunoNoCurso((Aluno) entity);
+			break;
+		case "Cursos do aluno":
+			cursosDoAluno((Aluno) entity);
 			break;
 		default:
 			startApp();
