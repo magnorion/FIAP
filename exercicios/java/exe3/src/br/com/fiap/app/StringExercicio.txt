@@ -1,0 +1,2 @@
+a) Serão criados 13 objetos. 1 logo no icicio e 12 no loop.
+b) Manipulando a string usando o StringBuilder
